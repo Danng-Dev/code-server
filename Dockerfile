@@ -56,20 +56,6 @@ ENV SHELL=/bin/bash \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 
-# Install VSCode extensions
-RUN code-server --install-extension redhat.vscode-yaml \
-    --install-extension ms-python.python \
-    --install-extension vscjava.vscode-java-pack \
-    --install-extension bungcip.better-toml \
-    --install-extension ginfuru.ginfuru-better-solarized-dark-theme \
-    --install-extension oderwat.indent-rainbow \
-    --install-extension mechatroner.rainbow-csv \
-    --install-extension GrapeCity.gc-excelviewer \
-    --install-extension yzhang.markdown-all-in-one \
-    --install-extension redhat.vscode-xml \
-    --install-extension ms-mssql.mssql \
-    --install-extension eamodio.gitlens
-
 ADD start.sh /opt/start.sh
 
 WORKDIR /home/coder/project
