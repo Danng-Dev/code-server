@@ -82,7 +82,6 @@ RUN code-server --install-extension redhat.vscode-yaml \
     --install-extension eamodio.gitlens
 
 ADD start.sh /opt/start.sh
-COPY --chown=1000 settings.json /home/coder/.local/share/code-server/User/settings.json
 
 WORKDIR /home/coder/project
 ENTRYPOINT [ "/opt/start.sh" ]
