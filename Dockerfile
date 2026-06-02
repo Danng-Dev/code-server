@@ -1,4 +1,4 @@
-FROM https://lscr.io/linuxserver/code-server:latest
+FROM lscr.io/linuxserver/code-server:latest
 LABEL org.opencontainers.image.source=https://github.com/Volcar144/code-server
 
 USER root
