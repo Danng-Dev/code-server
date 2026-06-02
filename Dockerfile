@@ -50,7 +50,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 # Install OpenJDK, Maven, and SBT
 RUN apt-get update -y && \
     apt-get install -y \
-    openjdk-17-jdk \
+    openjdk-26-jdk \
     maven && \
     echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
     curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add && \
@@ -66,8 +66,6 @@ ENV SHELL=/bin/bash \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
-
-RUN mkdir -p /home/coder/project
 
 # Install VSCode extensions
 RUN code-server --install-extension redhat.vscode-yaml \
