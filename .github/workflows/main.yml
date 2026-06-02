@@ -5,7 +5,7 @@ on:
     branches: [ main ]
     paths:
     - 'Dockerfile'
-    - '.github/workflows/publish-vscode-base.yml'
+    - '.github/workflows/main.yml'
   # schedule:
   # Monday at 04:00 AM UTC
   #   - cron: '0 4 * * 1'
@@ -13,6 +13,11 @@ on:
 jobs:
   build-and-publish-latest:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read # This is needed to checkout the code
+      packages: write
+      
     steps:
       - uses: actions/checkout@v3
 
