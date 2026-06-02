@@ -56,7 +56,4 @@ ENV SHELL=/bin/bash \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 
-ADD start.sh /opt/start.sh
-
 WORKDIR /home/coder/project
-ENTRYPOINT [ "/opt/start.sh" ]
