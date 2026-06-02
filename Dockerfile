@@ -3,7 +3,7 @@ LABEL org.opencontainers.image.source=https://github.com/Volcar144/code-server
 
 USER root
 
-# Install apt package
+# Install apt packages
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y \
