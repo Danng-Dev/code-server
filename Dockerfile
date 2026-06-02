@@ -20,27 +20,9 @@ RUN apt-get update -y && \
     php-json php-yaml php-xml \
     php-dev php-mbstring php-curl php-bz2 \
     mariadb-server \
-    gfortran \
-    python3 \
-    python3-venv \ 
-    python3-pip \
-    python3-dev && \
+    gfortran && \
     rm -rf /var/lib/apt/lists/*
-
-# Download and install Python 3.14 from source
-RUN cd /tmp && \
-    wget https://www.python.org/ftp/python/3.14.2/Python-3.14.2.tgz && \
-    tar -xf Python-3.14.2.tgz && \
-    cd Python-3.14.2 && \
-    ./configure --enable-optimizations --prefix=/usr/local && \
-    make -j $(nproc) && \
-    make altinstall && \
-    cd / && rm -rf /tmp/Python-3.14.2*
-
-# Set Python 3.14 as default
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.14 1 && \
-    update-alternatives --install /usr/bin/python python /usr/local/bin/python3.14 1
-
+    
 # Install Node.js (latest LTS)
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y nodejs && \
@@ -48,15 +30,22 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     rm -rf /var/lib/apt/lists/*
 
 # Install OpenJDK, Maven, and SBT
-RUN apt-get update -y && \
-    apt-get install -y \
-    openjdk-26-jdk \
-    maven && \
-    echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list && \
-    curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add && \
-    apt-get update -y && \
-    apt-get install -y sbt && \
+# Install OpenJDK, Maven, and SBT
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends ca-certificates curl gnupg; \
+    apt-get install -y --no-install-recommends openjdk-21-jdk maven; \
+    mkdir -p /usr/share/keyrings; \
+    curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" \
+      | gpg --dearmor -o /usr/share/keyrings/sbt.gpg; \
+    echo "deb [signed-by=/usr/share/keyrings/sbt.gpg] https://repo.scala-sbt.org/scalasbt/debian all main" \
+      > /etc/apt/sources.list.d/sbt.list; \
+    echo "deb [signed-by=/usr/share/keyrings/sbt.gpg] https://repo.scala-sbt.org/scalasbt/debian /" \
+      > /etc/apt/sources.list.d/sbt_old.list; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends sbt; \
     rm -rf /var/lib/apt/lists/*
+
 
 RUN chown -R 1000:1000 /opt
 USER 1000
