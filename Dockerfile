@@ -9,7 +9,7 @@ RUN apt-get update -y && \
     apt-get install -y \
     curl \
     wget \
-    build-essential ca-certificates \
+    build-essential ca-certificates asciinema\
     texlive-latex-extra texlive-xetex \
     libreadline-dev libncursesw5-dev \
     libssl-dev libsqlite3-dev \
